@@ -1,43 +1,21 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
+const rootDirectory = path.resolve(__dirname, '..');
 
 dotenv.config();
 const app = express();
 const port = process.env.SERVER_PORT;
 
-/**
- *
- * @type {Connection}
- */
-// const dbconn = mysql.createConnection({
-//     host: process.env.DATABASE_HOST,
-//     user: process.env.DATABASE_USERNAME,
-//     password: process.env.DATABASE_PASSWORD,
-//     database: process.env.DATABASE_NAME,
-//     port: process.env.DATABASE_PORT
-// });
-//
-// dbconn.connect(function (err) {
-//     if (err) {
-//         throw err;
-//     }
-//     console.log("Connected to Database");
-// });
-
 app.listen(port, () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
 
-app.use('/dist', express.static(__dirname + '/dist'));
-app.use('/assets', express.static(__dirname + '/dist/assets'));
-app.use('/characters', express.static(__dirname + '/dist/characters'));
-app.use('/comics', express.static(__dirname + '/dist/comics'));
+app.use('/dist', express.static(rootDirectory + '/dist'));
+app.use('/assets', express.static(rootDirectory + '/dist/assets'));
+app.use('/characters', express.static(rootDirectory + '/dist/characters'));
+app.use('/comics', express.static(rootDirectory + '/dist/comics'));
 
-/**
- *
- * @type:
- */
 const marvelItems = [
     {id: 1009368, name: "Iron Man"},
     {id: 1009220, name: "Captain America"},
@@ -49,14 +27,10 @@ const marvelItems = [
     {id: 1009718, name: "Wolverine"},
     {id: 1009268, name: "Deadpool"}
 
-
 ]
 
 const marvelCharacters = marvelItems.map(item => getCharacter(item.id, "marvel"));
 
-/**
- *
- */
 app.get("/marvel_characters", (req, res) => {
     /**
      *
@@ -71,9 +45,6 @@ app.get("/marvel_characters", (req, res) => {
         });
 });
 
-/**
- *
- */
 app.get(`/marvel_characters/:id`, (req, res) => {
     getCharacterDetails(req.params.id, "marvel")
         .then(responses => {
@@ -83,29 +54,23 @@ app.get(`/marvel_characters/:id`, (req, res) => {
             console.error('Error:', error);
         });
 });
+
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
 app.get("/marvel", (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
 app.get("/star-wars", (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
 app.get("/marvel/:id", (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
-
-/**
- *
- * @param id
- * @param type
- * @returns {Promise<{imageSource: string, name, description, id, type}>}
- */
 async function getCharacter(id, type) {
 
     if (type === 'marvel') {
@@ -127,12 +92,6 @@ async function getCharacter(id, type) {
     }
 }
 
-/**
- *
- * @param id
- * @param type
- * @returns {Promise<*>}
- */
 async function getCharacterDetails(id, type) {
 
     if (type === "marvel") {
@@ -161,9 +120,6 @@ async function getCharacterDetails(id, type) {
     }
 }
 
-/**
- *
- */
 app.get('*', (req, res) => {
     res.sendStatus(404);
 });
