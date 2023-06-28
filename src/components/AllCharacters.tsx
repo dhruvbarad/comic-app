@@ -1,0 +1,64 @@
+import CharacterProps from "../interfaces/CharacterProps.tsx";
+import Character from "./Character";
+import React, {RefObject, useRef, useState} from "react";
+import AllCharacterProps from "../interfaces/AllCharacterProps.tsx";
+
+const AllCharacters = ({characterType, imageLogo}: AllCharacterProps) => {
+    const [characters, setCharacters] = useState<CharacterProps[] | null>(null);
+
+    React.useEffect(() => {
+        fetch(`/${characterType}`)
+            .then((res) => res.json())
+            .then((data) => setCharacters(data.characters))
+            .finally(() => console.log("Results received from Server"));
+    }, []);
+
+    const rowRef: RefObject<HTMLDivElement> = useRef(null);
+    const scrollToNextCard = () => {
+        if (rowRef.current) {
+            rowRef.current.scrollBy({
+                left: rowRef.current.offsetWidth / 3,
+                behavior: 'smooth',
+            });
+        }
+    };
+    const scrollToPreviousCard = () => {
+        if (rowRef.current) {
+            rowRef.current.scrollBy({
+                left: -rowRef.current.offsetWidth / 3,
+                behavior: 'smooth',
+            });
+        }
+    };
+
+    return (
+        <>
+            <img style={{width: "300px", height: "200px", position: "sticky"}} src={imageLogo}
+                 className="rounded mx-auto d-block" alt={imageLogo.substring(imageLogo.lastIndexOf('/') + 1, imageLogo.lastIndexOf('.'))}></img>
+            {characters ? (
+                <div className="row">
+                    <div className="col text-center d-flex justify-content-end align-items-center">
+                        <button className="btn float-end" onClick={scrollToPreviousCard}>&lt;</button>
+                    </div>
+                    <div className="col-10">
+                        <div className="row flex-nowrap overflow-auto" ref={rowRef}>
+                            {characters.map((item, index) => (
+                                <Character key={index} copyRightHTML={item.copyRightHTML} id={item.id}
+                                           name={item.name}
+                                           description={item.description}
+                                           imageSource={item.imageSource} type={item.type}/>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="col text-center d-flex justify-content-start align-items-center">
+                        <button className="btn" onClick={scrollToNextCard}>&gt;</button>
+                    </div>
+                </div>
+            ) : (
+                <p className="text-center">Loading data...</p>
+            )}
+        </>
+    );
+}
+
+export default AllCharacters;
