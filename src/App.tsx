@@ -65,17 +65,17 @@ const MarvelStyle = createGlobalStyle`
 const StarWarsStyle = createGlobalStyle`
   .btn, .btn:hover {
     color: #e8eaed;
-    background-color: lightskyblue;
+    background-color: hsl(49, 100%, 40%);
   }
 
   .card {
     border-radius: 15px;
     transition: all .3s;
-    box-shadow: 0 0 15px 1px lightskyblue;
+    box-shadow: 0 0 15px 1px hsl(49, 100%, 40%);
   }
 
   .card .card-title {
-    background-color: lightskyblue;
+    background-color: hsl(49, 100%, 40%);
   }`;
 
 function App() {
@@ -87,11 +87,13 @@ function App() {
                     <Route path='/marvel'
                            element={<><MarvelStyle/><AllCharacters imageLogo="/dist/marvel.png"
                                                                    characterType="marvel_characters"/></>}/>
-                    <Route path='marvel/:id'
+                    <Route path='/marvel/:id'
                            element={<><MarvelStyle/><CharacterDetailsWrapper characterType="marvel_characters"/></>}/>
                     <Route path='/star-wars'
                            element={<><StarWarsStyle/><AllCharacters imageLogo="/dist/star-wars.png"
-                                                                     characterType="marvel_characters"/></>}/>
+                                                                     characterType="starwars_characters"/></>}/>
+                    <Route path='/star-wars/:id'
+                           element={<><StarWarsStyle/><CharacterDetailsWrapper characterType="starwars_characters"/></>}/>
                 </Routes>
 
             </Router>
