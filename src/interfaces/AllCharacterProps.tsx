@@ -1,6 +1,5 @@
 interface AllCharacterProps {
-    characterType: string,
-    imageLogo: string,
+    characterType: string
 }
 
 export default AllCharacterProps;

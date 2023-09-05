@@ -3,12 +3,14 @@ import {BrowserRouter as Router, Routes, Route, useParams} from 'react-router-do
 import CharacterDetails from "./components/CharacterDetails.tsx";
 
 import AllCharacters from "./components/AllCharacters.tsx";
+import Home from "./components/Home.tsx";
+import Navbar from "./components/Navbar.tsx";
+// import Navbar from "./components/Navbar.tsx";
 
 const DarkModeStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
   * {
-    margin: 10px 0 0 0;
     padding: 0;
     box-sizing: border-box;
     //outline: 1px solid white;
@@ -32,18 +34,28 @@ const DarkModeStyle = createGlobalStyle`
     background: black;
     font-family: "Roboto", sans-serif;
   }
+  
+  .card {
+    margin-top: 10px;
+  }
+
+  .navbar-nav > li {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
 
   .nav-link, .nav-link:hover {
     color: #e8eaed;
     font-size: 25px;
   }
 
-  .card-footer a {
-    color: grey;
+  .btn, .btn:hover {
+    color: #e8eaed;
+    background-color: black;
   }
 
-  #backToLink {
-    margin: 0 0 10px 50px;
+  .card-footer a {
+    color: grey;
   }`;
 
 const MarvelStyle = createGlobalStyle`
@@ -82,20 +94,19 @@ function App() {
     return (
         <>
             <DarkModeStyle/>
+            <Navbar />
             <Router>
                 <Routes>
+                    <Route path = '/' element={<Home />}/>
                     <Route path='/marvel'
-                           element={<><MarvelStyle/><AllCharacters imageLogo="/dist/marvel.png"
-                                                                   characterType="marvel_characters"/></>}/>
+                           element={<><MarvelStyle/><AllCharacters characterType="marvel_characters"/></>}/>
                     <Route path='/marvel/:id'
                            element={<><MarvelStyle/><CharacterDetailsWrapper characterType="marvel_characters"/></>}/>
                     <Route path='/star-wars'
-                           element={<><StarWarsStyle/><AllCharacters imageLogo="/dist/star-wars.png"
-                                                                     characterType="starwars_characters"/></>}/>
+                           element={<><StarWarsStyle/><AllCharacters characterType="starwars_characters"/></>}/>
                     <Route path='/star-wars/:id'
                            element={<><StarWarsStyle/><CharacterDetailsWrapper characterType="starwars_characters"/></>}/>
                 </Routes>
-
             </Router>
         </>
     );

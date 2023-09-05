@@ -142,7 +142,7 @@ async function getCharacter(id, type) {
                 copyRightHTML: "<a href=\"https://swapi.dev\">Data provided by swapi.dev.</a>",
                 id: id,
                 name: result.name,
-                description: `Born: ${result.birth_year} Height: ${result.height}`,
+                description: 'Coming soon',
                 imageSource: "http://localhost:3000/dist/star-wars.png",
                 type: type
             };

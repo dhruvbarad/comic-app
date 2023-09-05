@@ -3,7 +3,7 @@ import Character from "./Character";
 import React, {RefObject, useRef, useState} from "react";
 import AllCharacterProps from "../interfaces/AllCharacterProps.tsx";
 
-const AllCharacters = ({characterType, imageLogo}: AllCharacterProps) => {
+const AllCharacters = ({characterType}: AllCharacterProps) => {
     const [characters, setCharacters] = useState<CharacterProps[] | null>(null);
 
     React.useEffect(() => {
@@ -33,10 +33,12 @@ const AllCharacters = ({characterType, imageLogo}: AllCharacterProps) => {
 
     return (
         <>
-            <img style={{width: "300px", height: "200px", position: "sticky"}} src={imageLogo}
-                 className="rounded mx-auto d-block" alt={imageLogo.substring(imageLogo.lastIndexOf('/') + 1, imageLogo.lastIndexOf('.'))}></img>
+            <h5 className="backToLink"><a style={{textDecoration: "none"}} href="/"
+                   className="link-light">&lt; Back to home</a></h5>
+            {/*<img style={{width: "300px", height: "200px", position: "sticky"}} src={imageLogo}*/}
+            {/*     className="rounded mx-auto d-block" alt={imageLogo.substring(imageLogo.lastIndexOf('/') + 1, imageLogo.lastIndexOf('.'))}></img>*/}
             {characters ? (
-                <div className="row">
+                <div className="row mb-5">
                     <div className="col text-center d-flex justify-content-end align-items-center">
                         <button className="btn float-end" onClick={scrollToPreviousCard}>&lt;</button>
                     </div>

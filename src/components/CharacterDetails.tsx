@@ -22,9 +22,8 @@ const CharacterDetails = ({id, characterType}: CharacterDetailsProps) => {
     render();
     return (
         <>
-            <h5><a style={{textDecoration: "none"}} id="backToLink" href="javascript:window.history.back()"
-                   className="link-light">&lt; Back to
-                characters</a></h5>
+            <h5 className="backToLink"><a style={{textDecoration: "none"}} href="javascript:window.history.back()"
+                   className="link-light backToLink mb-5">&lt; Back to characters</a></h5>
             {entries.map(([key, value]) => <DetailCardContainer array={value} header={key}/>)}
         </>
     );
