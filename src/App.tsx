@@ -5,7 +5,6 @@ import CharacterDetails from "./components/CharacterDetails.tsx";
 import AllCharacters from "./components/AllCharacters.tsx";
 import Home from "./components/Home.tsx";
 import Navbar from "./components/Navbar.tsx";
-// import Navbar from "./components/Navbar.tsx";
 
 const DarkModeStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
@@ -13,7 +12,7 @@ const DarkModeStyle = createGlobalStyle`
   * {
     padding: 0;
     box-sizing: border-box;
-    //outline: 1px solid white;
+    //outline: 1px solid white;     // keep this line for div white lining.
   }
 
   ::-webkit-scrollbar {
@@ -34,7 +33,7 @@ const DarkModeStyle = createGlobalStyle`
     background: black;
     font-family: "Roboto", sans-serif;
   }
-  
+
   .card {
     margin-top: 10px;
   }

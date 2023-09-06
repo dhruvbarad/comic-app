@@ -32,11 +32,12 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
     };
 
     return (
-        <>
-            <h5 className="backToLink"><a style={{textDecoration: "none"}} href="/"
-                   className="link-light">&lt; Back to home</a></h5>
-            {/*<img style={{width: "300px", height: "200px", position: "sticky"}} src={imageLogo}*/}
-            {/*     className="rounded mx-auto d-block" alt={imageLogo.substring(imageLogo.lastIndexOf('/') + 1, imageLogo.lastIndexOf('.'))}></img>*/}
+        <div className="container-fluid">
+            <div style={{marginLeft: "50px"}}>
+                <h5 className="backToLink"><a style={{textDecoration: "none"}} href="/"
+                                              className="link-light">&lt; Back to home</a>
+                </h5>
+            </div>
             {characters ? (
                 <div className="row mb-5">
                     <div className="col text-center d-flex justify-content-end align-items-center">
@@ -59,7 +60,7 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
             ) : (
                 <p className="text-center">Loading data...</p>
             )}
-        </>
+        </div>
     );
 }
 

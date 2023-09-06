@@ -1,14 +1,12 @@
 const express = require("express");
 const path = require("path");
+const dotenv = require("dotenv");
 const rootDirectory = path.resolve(__dirname, '..');
-const API_HASH = "636509a4b7fed1fae26f72601899f1db"
-const PRIVATE_KEY="f9b94630aebd18a0d1016bb2aaa09767430ad5ed"
-const PUBLIC_KEY="b0a4bb4ae817de4b460fabd5034dd73c"
-const port = 3000;
+dotenv.config();
 const app = express();
 
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(process.env.PORT, () => {
+    console.log(`⚡️[server]: Server is running`);
 });
 
 app.use('/dist', express.static(rootDirectory + '/dist'));
@@ -75,7 +73,7 @@ app.get(`/starwars_characters/:id`, (req, res) => {
                     copyRightHTML: "<a href=\"https://swapi.dev\">Data provided by swapi.dev.</a>",
                     title: result.title,
                     description: result.opening_crawl.replace(/\s+/g, ' ').trim(),
-                    imageSource: "http://localhost:3000/dist/star-wars.png"
+                    imageSource: ""
                 });
             }
 
@@ -118,7 +116,7 @@ async function getCharacter(id, type) {
 
     if (type === 'marvel') {
         try {
-            const response = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=b0a4bb4ae817de4b460fabd5034dd73c&hash=${API_HASH}&ts=1`);
+            const response = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=b0a4bb4ae817de4b460fabd5034dd73c&hash=${process.env.API_HASH}&ts=1`);
             const result = await response.json();
             return {
                 copyRightHTML: result.attributionHTML,
@@ -143,7 +141,7 @@ async function getCharacter(id, type) {
                 id: id,
                 name: result.name,
                 description: 'Coming soon',
-                imageSource: "http://localhost:3000/dist/star-wars.png",
+                imageSource: "",
                 type: type
             };
         } catch (error) {
@@ -157,7 +155,7 @@ async function getCharacterDetails(id, type) {
 
     if (type === "marvel") {
         try {
-            const responseComics = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}/comics?limit=5&apikey=b0a4bb4ae817de4b460fabd5034dd73c&hash=${API_HASH}&ts=1&orderBy=-focDate`);
+            const responseComics = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}/comics?limit=5&apikey=b0a4bb4ae817de4b460fabd5034dd73c&hash=${process.env.API_HASH}&ts=1&orderBy=-focDate`);
             const resultComics = await responseComics.json();
             const comics = resultComics.data.results.map((comic) => new Object({
                 copyRightHTML: resultComics.attributionHTML,
