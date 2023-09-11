@@ -5,14 +5,16 @@ const rootDirectory = path.resolve(__dirname, '..');
 dotenv.config();
 const app = express();
 
-app.listen(process.env.PORT, () => {
+const PORT = 3000;
+const API_HASH = "636509a4b7fed1fae26f72601899f1db"
+const PRIVATE_KEY = "f9b94630aebd18a0d1016bb2aaa09767430ad5ed"
+const PUBLIC_KEY = "b0a4bb4ae817de4b460fabd5034dd73c"
+app.listen(PORT, () => {
     console.log(`⚡️[server]: Server is running`);
 });
 
 app.use('/dist', express.static(rootDirectory + '/dist'));
 app.use('/assets', express.static(rootDirectory + '/dist/assets'));
-app.use('/characters', express.static(rootDirectory + '/dist/characters'));
-app.use('/comics', express.static(rootDirectory + '/dist/comics'));
 
 const marvelItems = [
     {id: 1009368, name: "Iron Man"},
@@ -116,7 +118,7 @@ async function getCharacter(id, type) {
 
     if (type === 'marvel') {
         try {
-            const response = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=b0a4bb4ae817de4b460fabd5034dd73c&hash=${process.env.API_HASH}&ts=1`);
+            const response = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1`);
             const result = await response.json();
             return {
                 copyRightHTML: result.attributionHTML,
@@ -155,7 +157,7 @@ async function getCharacterDetails(id, type) {
 
     if (type === "marvel") {
         try {
-            const responseComics = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}/comics?limit=5&apikey=b0a4bb4ae817de4b460fabd5034dd73c&hash=${process.env.API_HASH}&ts=1&orderBy=-focDate`);
+            const responseComics = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}/comics?limit=5&apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1&orderBy=-focDate`);
             const resultComics = await responseComics.json();
             const comics = resultComics.data.results.map((comic) => new Object({
                 copyRightHTML: resultComics.attributionHTML,
