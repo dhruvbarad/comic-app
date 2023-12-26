@@ -5,57 +5,7 @@ import CharacterDetails from "./components/CharacterDetails.tsx";
 import AllCharacters from "./components/AllCharacters.tsx";
 import Home from "./components/Home.tsx";
 import Navbar from "./components/Navbar.tsx";
-
-const DarkModeStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-
-  * {
-    padding: 0;
-    box-sizing: border-box;
-    //outline: 1px solid white;     // keep this line for div white lining.
-  }
-
-  ::-webkit-scrollbar {
-    background: black;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #2c3034;
-  }
-
-  ::-webkit-scrollbar-corner {
-    background: #000;
-  }
-
-  body, .card {
-    margin-bottom: 40px;
-    color: #e8eaed;
-    background: black;
-    font-family: "Roboto", sans-serif;
-  }
-
-  .card {
-    margin-top: 10px;
-  }
-
-  .navbar-nav > li {
-    margin-left: 30px;
-    margin-right: 30px;
-  }
-
-  .nav-link, .nav-link:hover {
-    color: #e8eaed;
-    font-size: 25px;
-  }
-
-  .btn, .btn:hover {
-    color: #e8eaed;
-    background-color: black;
-  }
-
-  .card-footer a {
-    color: grey;
-  }`;
+import "./App.css";
 
 const MarvelStyle = createGlobalStyle`
   .btn, .btn:hover {
@@ -92,7 +42,6 @@ const StarWarsStyle = createGlobalStyle`
 function App() {
     return (
         <>
-            <DarkModeStyle/>
             <Navbar />
             <Router>
                 <Routes>
