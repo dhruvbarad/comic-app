@@ -11,7 +11,7 @@ const Character = ({copyRightHTML, id, name, description, imageSource, type}: Ch
                     <p className="card-text">{description}</p>
                 </div>
                 <small className="card-footer" dangerouslySetInnerHTML={{__html: copyRightHTML}}/>
-                <a type='button' className="btn" href={`/${type}/${id}`}>Click for character's details</a>
+                <a type='button' className="btn" href={`https://comic-app-50173.web.app/${type}/${id}`}>Click for character's details</a>
             </div>
         </div>
     )

@@ -8,36 +8,10 @@ import Navbar from "./components/Navbar.tsx";
 import "./App.css";
 
 const MarvelStyle = createGlobalStyle`
-  .btn, .btn:hover {
-    color: #e8eaed;
-    background-color: rgba(255, 0, 50, 0.70);
-  }
-
-  .card {
-    border-radius: 15px;
-    transition: all .3s;
-    box-shadow: 0 0 15px 1px rgba(255, 0, 50, 0.70);
-  }
-
-  .card .card-title {
-    background-color: rgba(255, 0, 50, 0.70);
-  }`;
+`;
 
 const StarWarsStyle = createGlobalStyle`
-  .btn, .btn:hover {
-    color: #e8eaed;
-    background-color: hsl(49, 100%, 40%);
-  }
-
-  .card {
-    border-radius: 15px;
-    transition: all .3s;
-    box-shadow: 0 0 15px 1px hsl(49, 100%, 40%);
-  }
-
-  .card .card-title {
-    background-color: hsl(49, 100%, 40%);
-  }`;
+`;
 
 function App() {
     return (

@@ -1,18 +1,19 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable no-undef */
+const functions = require("firebase-functions");
 const express = require("express");
 const path = require("path");
-const dotenv = require("dotenv");
+const cors = require('cors');
+
 const rootDirectory = path.resolve(__dirname, '..');
-dotenv.config();
 const app = express();
 
 const PORT = 3000;
 const API_HASH = "636509a4b7fed1fae26f72601899f1db"
 const PRIVATE_KEY = "f9b94630aebd18a0d1016bb2aaa09767430ad5ed"
 const PUBLIC_KEY = "b0a4bb4ae817de4b460fabd5034dd73c"
-app.listen(PORT, () => {
-    console.log(`⚡️[server]: Server is running`);
-});
 
+app.use(cors({origin: true}));
 app.use('/dist', express.static(rootDirectory + '/dist'));
 app.use('/assets', express.static(rootDirectory + '/dist/assets'));
 
@@ -35,7 +36,7 @@ const starWarsItems = [
 const marvelCharacters = marvelItems.map(item => getCharacter(item.id, "marvel"));
 const starWarsCharacters = starWarsItems.map(item => getCharacter(item.id, "star-wars"));
 
-app.get("/marvel_characters", (req, res) => {
+app.get(`/marvel_characters`, (req, res) => {
     Promise.all(marvelCharacters)
         .then(responses => {
             res.json({"characters": responses});
@@ -55,7 +56,7 @@ app.get(`/marvel_characters/:id`, (req, res) => {
         });
 });
 
-app.get("/starwars_characters", (req, res) => {
+app.get(`/starwars_characters`, (req, res) => {
     Promise.all(starWarsCharacters)
         .then(responses => {
             res.json({"characters": responses});
@@ -98,19 +99,19 @@ app.get("/", (req, res) => {
     res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
-app.get("/marvel", (req, res) => {
+app.get(`/marvel`, (req, res) => {
     res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
-app.get("/marvel/:id", (req, res) => {
+app.get(`/marvel/:id`, (req, res) => {
     res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
-app.get("/star-wars", (req, res) => {
+app.get(`/star-wars`, (req, res) => {
     res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
-app.get("/star-wars/:id", (req, res) => {
+app.get(`/star-wars/:id`, (req, res) => {
     res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
 });
 
@@ -193,6 +194,8 @@ async function getCharacterDetails(id, type) {
     }
 }
 
-app.get('*', (req, res) => {
-    res.sendStatus(404);
+app.get("*", (req, res) => {
+    res.send(404).json({data: "Not found"});
 });
+
+exports.app = functions.https.onRequest(app);

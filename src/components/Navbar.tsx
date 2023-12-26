@@ -13,17 +13,17 @@ const Navbar = () => {
                             <a className="nav-link" href="/">Home</a>
                         </li>
                         <li className="nav-item">
-                            <a href="/marvel">
+                            <a href="https://comic-app-50173.web.app/marvel">
                                 <img style={{width: "120px", height: "80px"}}
-                                     src="/dist/marvel.png"
+                                     src="/marvel.png"
                                      alt="Marvel"
                                 />
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a href="/star-wars">
+                            <a href="https://comic-app-50173.web.app/star-wars">
                                 <img style={{width: "120px", height: "80px"}}
-                                     src="/dist/star-wars.png"
+                                     src="/star-wars.png"
                                      alt="Star Wars"
                                 />
                             </a>

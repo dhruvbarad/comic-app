@@ -3,23 +3,26 @@ import CharacterDetailsProps from "../interfaces/CharacterDetailsProps.tsx";
 import 'animate.css';
 import DetailCardContainer from "./DetailCardContainer.tsx";
 
-const CharacterDetails = ({id, characterType}: CharacterDetailsProps) => {
+const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
     const [characterDetails, setCharacterDetails] = useState<Object>({});
 
     React.useEffect(() => {
-        fetch(`/${characterType}/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                setCharacterDetails(data);
-            })
-            .finally(() => console.log("Results received from Server"));
-    }, []);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/${characterType}/${id}`);
+                if (!response.ok) {
+                    console.error(`HTTP error! Status: ${response.status}`);
+                }
+                const result = await response.json();
+                setCharacterDetails(result);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData().then(() => console.log("Fetched successfully"));
+    }, [characterType, id]);
 
     const entries = Object.entries(characterDetails)
-    const render = () => entries.forEach(([key, value]) => {
-        console.log(`${key}: ${value}`)
-    })
-    render();
     return (
         <div className="container-fluid">
             <div style={{marginLeft: "50px"}}>
