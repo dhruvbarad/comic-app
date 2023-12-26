@@ -8,7 +8,6 @@ const cors = require('cors');
 const rootDirectory = path.resolve(__dirname, '..');
 const app = express();
 
-const PORT = 3000;
 const API_HASH = "636509a4b7fed1fae26f72601899f1db"
 const PRIVATE_KEY = "f9b94630aebd18a0d1016bb2aaa09767430ad5ed"
 const PUBLIC_KEY = "b0a4bb4ae817de4b460fabd5034dd73c"
@@ -36,7 +35,7 @@ const starWarsItems = [
 const marvelCharacters = marvelItems.map(item => getCharacter(item.id, "marvel"));
 const starWarsCharacters = starWarsItems.map(item => getCharacter(item.id, "star-wars"));
 
-app.get(`/marvel_characters`, (req, res) => {
+app.get("/marvel_characters", (req, res) => {
     Promise.all(marvelCharacters)
         .then(responses => {
             res.json({"characters": responses});
@@ -46,7 +45,7 @@ app.get(`/marvel_characters`, (req, res) => {
         });
 });
 
-app.get(`/marvel_characters/:id`, (req, res) => {
+app.get("/marvel_characters/:id", (req, res) => {
     getCharacterDetails(req.params.id, "marvel")
         .then(responses => {
             res.json({"Latest comics": responses.comics, "Movies": responses.movies});
@@ -56,7 +55,7 @@ app.get(`/marvel_characters/:id`, (req, res) => {
         });
 });
 
-app.get(`/starwars_characters`, (req, res) => {
+app.get("/starwars_characters", (req, res) => {
     Promise.all(starWarsCharacters)
         .then(responses => {
             res.json({"characters": responses});
@@ -66,7 +65,7 @@ app.get(`/starwars_characters`, (req, res) => {
         });
 });
 
-app.get(`/starwars_characters/:id`, (req, res) => {
+app.get("/starwars_characters/:id", (req, res) => {
     getCharacterDetails(req.params.id, "star-wars")
         .then(responses => {
             async function getMovieDetail(url) {
@@ -95,28 +94,7 @@ app.get(`/starwars_characters/:id`, (req, res) => {
         });
 });
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
-});
-
-app.get(`/marvel`, (req, res) => {
-    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
-});
-
-app.get(`/marvel/:id`, (req, res) => {
-    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
-});
-
-app.get(`/star-wars`, (req, res) => {
-    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
-});
-
-app.get(`/star-wars/:id`, (req, res) => {
-    res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
-});
-
 async function getCharacter(id, type) {
-
     if (type === 'marvel') {
         try {
             const response = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1`);
@@ -155,7 +133,6 @@ async function getCharacter(id, type) {
 }
 
 async function getCharacterDetails(id, type) {
-
     if (type === "marvel") {
         try {
             const responseComics = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}/comics?limit=5&apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1&orderBy=-focDate`);

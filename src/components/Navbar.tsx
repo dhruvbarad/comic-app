@@ -1,9 +1,4 @@
 const Navbar = () => {
-    {/*<a className="navbar-brand" href="#">Navbar w/ text</a>*/}
-    {/*<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"*/}
-    {/*        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">*/}
-    {/*    <span className="navbar-toggler-icon"></span>*/}
-    {/*</button>*/}
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
@@ -13,7 +8,7 @@ const Navbar = () => {
                             <a className="nav-link" href="/">Home</a>
                         </li>
                         <li className="nav-item">
-                            <a href="https://comic-app-50173.web.app/marvel">
+                            <a href="/marvel">
                                 <img style={{width: "120px", height: "80px"}}
                                      src="/marvel.png"
                                      alt="Marvel"
@@ -21,7 +16,7 @@ const Navbar = () => {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a href="https://comic-app-50173.web.app/star-wars">
+                            <a href="/star-wars">
                                 <img style={{width: "120px", height: "80px"}}
                                      src="/star-wars.png"
                                      alt="Star Wars"

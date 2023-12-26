@@ -1,5 +1,4 @@
 import DetailsProps from "../interfaces/DetailsProps.tsx";
-import 'animate.css';
 import React from "react";
 
 const DetailCard: React.FC<DetailsProps> = ({copyRightHTML, title, description, imageSource}) => {
