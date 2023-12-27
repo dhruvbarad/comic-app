@@ -4,6 +4,7 @@ import CharacterDetails from "./components/CharacterDetails.tsx";
 import AllCharacters from "./components/AllCharacters.tsx";
 import Home from "./components/Home.tsx";
 import Navbar from "./components/Navbar.tsx";
+import "./App.css";
 
 function App() {
     return (

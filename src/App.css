@@ -1,0 +1,39 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+    outline: 1px solid black;
+}
+
+#root {
+    color: black;
+    background-color: white;
+}
+
+::-webkit-scrollbar {
+    background: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2c3034;
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
+}
+
+::-webkit-scrollbar {
+    background: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2c3034;
+}
+
+::-webkit-scrollbar-corner {
+    background: #000;
+}
+
+.navbar-nav > li {
+    margin-left: 30px;
+}
+
