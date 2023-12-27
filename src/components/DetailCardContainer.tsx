@@ -22,7 +22,7 @@ const DetailCardContainer: React.FC<DetailContainerProps> = ({array, header}) =>
     };
     return (
         array ? (
-            <div className="mb-5">
+            <div className="row mb-5">
                 <h3 className="text-center">{header}</h3>
                 <div className="row">
                     <div className="col text-center d-flex justify-content-end align-items-center">

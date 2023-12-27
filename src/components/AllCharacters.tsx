@@ -46,8 +46,8 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
     };
 
     return (
-        <div className="container-fluid">
-            <h5><a href="/">&lt; Back to home</a></h5>
+        <div className={`container-fluid ${characterType}`}>
+            <h5><a className="link-light" href="/">&lt; Back to home</a></h5>
             {characters && characterRows ? (
                 characterRows.map((row, rowIndex) => (
                     <div key={rowIndex} className="row mb-5">

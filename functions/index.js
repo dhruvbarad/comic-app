@@ -25,11 +25,26 @@ const marvelItems = [
     {id: 1009338, name: "Hawkeye"},
     {id: 1009610, name: "Spider-Man (Peter Parker)"},
     {id: 1009718, name: "Wolverine"},
+    {id: 1009268, name: "Deadpool"},
+    {id: 1009268, name: "Deadpool"},
+    {id: 1009268, name: "Deadpool"},
     {id: 1009268, name: "Deadpool"}
 ]
 
 const starWarsItems = [
     {id: 1, name: "Luke Skywalker"},
+    {id: 2, name: "C-3PO"},
+    {id: 3, name: "R2-D2"},
+    {id: 4, name: "Darth Vader"},
+    {id: 5, name: "Leia Organa"},
+    {id: 10, name: "Obi-Wan Kenobi"},
+    {id: 11, name: "Anakin Skywalker"},
+    {id: 13, name: "Chewbacca"},
+    {id: 14, name: "Han Solo"},
+    {id: 20, name: "Yoda"},
+    {id: 21, name: "Palpatine"},
+    {id: 22, name: "Boba Fett"},
+
 ]
 
 const marvelCharacters = marvelItems.map(item => getCharacter(item.id, "marvel"));
@@ -67,7 +82,7 @@ app.get("/starwars_characters", (req, res) => {
 
 app.get("/starwars_characters/:id", (req, res) => {
     getCharacterDetails(req.params.id, "star-wars")
-        .then(responses => {
+        .then(filmUrls => {
             async function getMovieDetail(url) {
                 const response = await fetch(url);
                 const result = await response.json();
@@ -75,11 +90,11 @@ app.get("/starwars_characters/:id", (req, res) => {
                     copyRightHTML: "<a href=\"https://swapi.dev\">Data provided by swapi.dev.</a>",
                     title: result.title,
                     description: result.opening_crawl.replace(/\s+/g, ' ').trim(),
-                    imageSource: ""
+                    imageSource: "/na.jpg"
                 });
             }
 
-            const characterMovies = responses.map(url => getMovieDetail(url));
+            const characterMovies = filmUrls.map(url => getMovieDetail(url));
 
             Promise.all(characterMovies)
                 .then(responses => {
@@ -122,7 +137,7 @@ async function getCharacter(id, type) {
                 id: id,
                 name: result.name,
                 description: 'Coming soon',
-                imageSource: "",
+                imageSource: "/na.jpg",
                 type: type
             };
         } catch (error) {

@@ -1,39 +1,65 @@
-* {
-    padding: 0;
-    box-sizing: border-box;
-    outline: 1px solid black;
-}
-
 #root {
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: black;
 }
 
-::-webkit-scrollbar {
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+
+.navbar-nav img {
+    width: 120px;
+    height: 80px
+}
+
+::-webkit-scrollbar, ::-webkit-scrollbar-corner {
     background: black;
 }
 
 ::-webkit-scrollbar-thumb {
     background: #2c3034;
-}
-
-::-webkit-scrollbar-corner {
-    background: #000;
-}
-
-::-webkit-scrollbar {
-    background: black;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #2c3034;
-}
-
-::-webkit-scrollbar-corner {
-    background: #000;
 }
 
 .navbar-nav > li {
-    margin-left: 30px;
+    margin-right: 30px;
 }
 
+.card-footer a {
+    color: darkgray;
+}
+
+.card {
+    border-radius: 15px;
+    transition: all .3s;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.marvel_characters .btn, .marvel_characters .btn:hover {
+    background-color: #e62429
+}
+
+.marvel_characters .card {
+    background-color: black;
+    box-shadow: 0 0 15px 1px #e62429;
+}
+
+.marvel_characters .card-title {
+    background-color: #e62429;
+}
+
+.starwars_characters .btn, .starwars_characters .btn:hover {
+    background-color: hsl(49, 100%, 40%);
+}
+
+.starwars_characters .card {
+    background-color: black;
+    box-shadow: 0 0 15px 1px hsl(49, 100%, 40%);
+
+}
+
+.starwars_characters .card-title {
+    background-color: hsl(49, 100%, 40%);
+}

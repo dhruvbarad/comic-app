@@ -1,14 +1,12 @@
 import DetailsProps from "../interfaces/DetailsProps.tsx";
-import React from "react";
-
-const DetailCard: React.FC<DetailsProps> = ({copyRightHTML, title, description, imageSource}) => {
+const DetailCard = ({copyRightHTML, title, description, imageSource}: DetailsProps) => {
     return (
-        <div className="col-md-4 d-flex animate__animated animate__fadeIn">
+        <div className="col-md-4 d-flex">
             <div className="card">
                 <img src={imageSource} className="card-img-top" alt={title}></img>
                 <div className="card-body">
                     <h5 className="card-title text-center">{title}</h5>
-                    <p className="card-text">{description}</p>
+                    <p className="card-text" dangerouslySetInnerHTML={{__html: description}} />
                 </div>
                 <small className="card-footer" dangerouslySetInnerHTML={{__html: copyRightHTML}}/>
             </div>
