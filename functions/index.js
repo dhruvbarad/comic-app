@@ -26,9 +26,9 @@ const marvelItems = [
     {id: 1009610, name: "Spider-Man (Peter Parker)"},
     {id: 1009718, name: "Wolverine"},
     {id: 1009268, name: "Deadpool"},
-    {id: 1009268, name: "Deadpool"},
-    {id: 1009268, name: "Deadpool"},
-    {id: 1009268, name: "Deadpool"}
+    {id: 1009407, name: "Loki"},
+    {id: 1009187, name: "Black Panther"},
+    {id: 1010801, name: "Ant-Man (Scott Lang)"}
 ]
 
 const starWarsItems = [
@@ -161,7 +161,7 @@ async function getCharacterDetails(id, type) {
 
             const movies = resultComics.data.results.map((comic) => new Object({
                 copyRightHTML: "",
-                title: "",
+                title: "Coming soon",
                 description: "",
                 imageSource: ""
             }));

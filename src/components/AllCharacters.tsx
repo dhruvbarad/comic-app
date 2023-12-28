@@ -1,9 +1,13 @@
-import CharacterProps from "../interfaces/CharacterProps";
-import Character from "./Character";
+import Character, {CharacterProps} from "./Character";
 import React, {RefObject, useRef, useState} from "react";
-import AllCharacterProps from "../interfaces/AllCharacterProps.tsx";
+import {splitIntoRows, scrollToPreviousCard, scrollToNextCard} from "../utils/util.ts"
+
+interface AllCharacterProps {
+    characterType: string
+}
 
 const AllCharacters = ({characterType}: AllCharacterProps) => {
+
     const [characters, setCharacters] = useState<CharacterProps[] | null>(null);
 
     React.useEffect(() => {
@@ -14,37 +18,9 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
             .finally(() => console.log("Results received from Server"));
     }, []);
 
-    const splitCharacters = (characters: CharacterProps[] | null, charactersPerRow: number) => {
-        const rows: CharacterProps[][] = [];
-        if (characters) {
-            for (let i = 0; i < characters.length; i += charactersPerRow) {
-                const row = characters.slice(i, i + charactersPerRow);
-                rows.push(row);
-            }
-            return rows;
-        }
-    };
-
     const charactersPerRow = 4;
-    const characterRows = splitCharacters(characters, charactersPerRow);
-    const ref = useRef(null);
-    const scrollToNextCard = (ref: RefObject<HTMLDivElement>) => {
-        if (ref.current) {
-            ref.current.scrollBy({
-                left: ref.current.offsetWidth / 3,
-                behavior: 'smooth',
-            });
-        }
-    };
-    const scrollToPreviousCard = (ref: RefObject<HTMLDivElement>) => {
-        if (ref.current) {
-            ref.current.scrollBy({
-                left: -ref.current.offsetWidth / 3,
-                behavior: 'smooth',
-            });
-        }
-    };
-
+    const characterRows: CharacterProps[][] | undefined = splitIntoRows(characters, charactersPerRow);
+    const rowRef: RefObject<HTMLDivElement> = useRef(null);
     return (
         <div className={`container-fluid ${characterType}`}>
             <h5><a className="link-light" href="/">&lt; Back to home</a></h5>
@@ -52,7 +28,8 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
                 characterRows.map((row, rowIndex) => (
                     <div key={rowIndex} className="row mb-5">
                         <div className="col text-center d-flex justify-content-end align-items-center">
-                            <button className="btn float-end" onClick={() => scrollToPreviousCard(ref)}>&lt;</button>
+                            <button className="btn float-end"
+                                    onClick={() => scrollToPreviousCard(rowRef)}>&lt;</button>
                         </div>
                         <div className="col-10">
                             <div className="row flex-nowrap overflow-auto">
@@ -64,7 +41,7 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
                             </div>
                         </div>
                         <div className="col text-center d-flex justify-content-start align-items-center">
-                            <button className="btn" onClick={() => scrollToNextCard(ref)}>&gt;</button>
+                            <button className="btn" onClick={() => scrollToNextCard(rowRef)}>&gt;</button>
                         </div>
                     </div>
                 ))

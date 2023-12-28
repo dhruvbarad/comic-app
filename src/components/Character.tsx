@@ -1,4 +1,11 @@
-import CharacterProps from "../interfaces/CharacterProps.tsx";
+export interface CharacterProps {
+    copyRightHTML: string;
+    id: number;
+    name: string;
+    description: string;
+    imageSource: string;
+    type: string;
+}
 
 const Character = ({copyRightHTML, id, name, description, imageSource, type}: CharacterProps) => {
     return (

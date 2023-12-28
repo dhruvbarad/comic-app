@@ -1,6 +1,10 @@
 import React, {useState} from "react";
-import CharacterDetailsProps from "../interfaces/CharacterDetailsProps.tsx";
 import DetailCardContainer from "./DetailCardContainer.tsx";
+
+interface CharacterDetailsProps {
+    id: number;
+    characterType: string;
+}
 
 const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
     const [characterDetails, setCharacterDetails] = useState<Object>({});
