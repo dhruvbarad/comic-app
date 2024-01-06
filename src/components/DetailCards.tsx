@@ -3,12 +3,12 @@ import {RefObject, useRef} from "react";
 import {scrollToPreviousCard, scrollToNextCard} from "../utils/util.ts";
 
 
-interface DetailContainerProps {
+interface DetailCardsProps {
     array: DetailsProps[],
     header: string,
 }
 
-const DetailCardContainer = ({array, header}: DetailContainerProps) => {
+const DetailCards = ({array, header}: DetailCardsProps) => {
     const rowRef: RefObject<HTMLDivElement> = useRef(null);
     return (
         array ? (
@@ -16,7 +16,7 @@ const DetailCardContainer = ({array, header}: DetailContainerProps) => {
                 <h3 className="text-center">{header}</h3>
                 <div className="row">
                     <div className="col text-center d-flex justify-content-end align-items-center">
-                        <button className="btn float-end" onClick={() => scrollToPreviousCard(rowRef)}>&lt;</button>
+                        <button className="btn float-end" onClick={() => scrollToPreviousCard(rowRef, 3)}>&lt;</button>
 
                     </div>
                     <div className="col-10">
@@ -29,7 +29,7 @@ const DetailCardContainer = ({array, header}: DetailContainerProps) => {
                         </div>
                     </div>
                     <div className="col text-center d-flex justify-content-start align-items-center">
-                        <button className="btn" onClick={() => scrollToNextCard(rowRef)}>&gt;</button>
+                        <button className="btn" onClick={() => scrollToNextCard(rowRef, 3)}>&gt;</button>
                     </div>
                 </div>
             </div>
@@ -38,4 +38,4 @@ const DetailCardContainer = ({array, header}: DetailContainerProps) => {
         ))
 }
 
-export default DetailCardContainer;
+export default DetailCards;

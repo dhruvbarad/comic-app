@@ -10,19 +10,19 @@ export const splitIntoRows = (allCards: any[] | null, charactersPerRow: number) 
         return rows;
     }
 };
-export const scrollToNextCard = (ref: RefObject<HTMLDivElement>) => {
+export const scrollToNextCard = (ref: RefObject<HTMLDivElement>, scrollBy: number) => {
     if (ref.current) {
         ref.current.scrollBy({
-            left: ref.current.offsetWidth / 3,
+            left: ref.current.offsetWidth / scrollBy,
             behavior: 'smooth',
         });
     }
 };
 
-export const scrollToPreviousCard = (ref: RefObject<HTMLDivElement>) => {
+export const scrollToPreviousCard = (ref: RefObject<HTMLDivElement>, scrollBy: number) => {
     if (ref.current) {
         ref.current.scrollBy({
-            left: -ref.current.offsetWidth / 3,
+            left: -ref.current.offsetWidth / scrollBy,
             behavior: 'smooth',
         });
     }

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import DetailCardContainer from "./DetailCardContainer.tsx";
+import DetailCards from "./DetailCards.tsx";
 
 interface CharacterDetailsProps {
     id: number;
@@ -12,9 +12,7 @@ const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
     React.useEffect(() => {
         fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/${characterType}/${id}`)
             .then((res) => res.json())
-            .then((data) => {
-                setCharacterDetails(data);
-            })
+            .then((data) => setCharacterDetails(data))
             .catch((err) => console.log("Error fetching data" + err))
             .finally(() => console.log("Results received from Server"));
     }, []);
@@ -25,7 +23,7 @@ const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
             <h5><a className="link-light" onClick={() => window.history.back()}>&lt; Back to characters</a></h5>
             {entries.length > 0 ? (
                 entries.map(([key, value]) =>
-                    <DetailCardContainer array={value} header={key}/>
+                    <DetailCards array={value} header={key}/>
                 )
             ) : (
                 <p className="text-center">Loading data...</p>

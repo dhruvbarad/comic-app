@@ -9,7 +9,7 @@ export interface CharacterProps {
 
 const Character = ({copyRightHTML, id, name, description, imageSource, type}: CharacterProps) => {
     return (
-        <div className="col-md-4 d-flex">
+        <div className="col-md-3 d-flex">
             <div className="card">
                 <img src={imageSource} className="card-img-top" alt={name}></img>
                 <div className="card-body">
