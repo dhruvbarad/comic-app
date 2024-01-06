@@ -26,7 +26,7 @@ const AllCharacters = ({characterType}: AllCharacterProps) => {
             <h5><a className="link-light" href="/">&lt; Back to home</a></h5>
             {characters && characterRows ? (
                 characterRows.map((row, rowIndex) => (
-                    <div key={rowIndex} className="row mb-5">
+                    <div key={rowIndex} className="row mb-5 animate__animated animate__fadeIn">
                         <div className="col text-center d-flex justify-content-end align-items-center">
                             <button className="btn float-end"
                                     onClick={() => scrollToPreviousCard(rowRef)}>&lt;</button>

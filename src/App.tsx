@@ -9,8 +9,8 @@ import Navbar from "./components/Navbar.tsx";
 function App() {
     return (
         <>
-            <Navbar />
             <Router>
+                <Navbar/>
                 <Routes>
                     <Route path='/' element={<Home/>}/>
                     <Route path='/marvel'

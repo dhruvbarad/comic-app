@@ -12,7 +12,7 @@ const DetailCardContainer = ({array, header}: DetailContainerProps) => {
     const rowRef: RefObject<HTMLDivElement> = useRef(null);
     return (
         array ? (
-            <div className="row mb-5">
+            <div className="row mb-5 animate__animated animate__fadeIn">
                 <h3 className="text-center">{header}</h3>
                 <div className="row">
                     <div className="col text-center d-flex justify-content-end align-items-center">

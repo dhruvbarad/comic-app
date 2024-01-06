@@ -21,9 +21,15 @@ const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
 
     const entries = Object.entries(characterDetails)
     return (
-        <div className={`container-fluid ${characterType}`}>
+        <div className={`container-fluid ${characterType} animate__animated animate__fadeIn`}>
             <h5><a className="link-light" onClick={() => window.history.back()}>&lt; Back to characters</a></h5>
-            {entries.map(([key, value]) => <DetailCardContainer array={value} header={key}/>)}
+            {entries.length > 0 ? (
+                entries.map(([key, value]) =>
+                    <DetailCardContainer array={value} header={key}/>
+                )
+            ) : (
+                <p className="text-center">Loading data...</p>
+            )}
         </div>
     );
 }
