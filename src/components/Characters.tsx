@@ -10,9 +10,9 @@ interface CharactersProps {
 
 const Characters = ({array, header, characterType}: CharactersProps) => {
     const rowRef: RefObject<HTMLDivElement> = useRef(null);
-    return (array ? (
-        <div className={`container-fluid ${characterType}`}>
-            <div className={`row ${header === "" ? "" : "mt-5"} mb-5 animate__animated animate__fadeIn`}>
+    return (array.length > 0 ? (
+        <div className={`container-fluid ${characterType} animate__animated animate__fadeIn`}>
+            <div className={`row ${header === "" ? "" : "mt-5"} mb-5`}>
                 <h3 className="text-center">{header}</h3>
                 <div className="col text-center d-flex justify-content-end align-items-center">
                     <button className="btn float-end"

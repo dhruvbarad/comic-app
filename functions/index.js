@@ -63,7 +63,7 @@ app.get("/marvel_characters", (req, res) => {
 app.get("/marvel_characters/:id", (req, res) => {
     getCharacterDetails(req.params.id, "marvel")
         .then(responses => {
-            res.json({"Latest comics": responses.comics, "Movies": responses.movies});
+            res.json({"Latest comics": responses.comics});
         })
         .catch(error => {
             console.error('Error:', error);
