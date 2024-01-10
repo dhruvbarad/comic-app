@@ -57,7 +57,7 @@ function App() {
                            element={
                                <>
                                    <Characters array={starWarsCharacters} characterType="starwars_characters"
-                                               header=""/>
+                                               header="Star Wars"/>
                                </>
                            }/>
                     <Route path='/marvel/:id'

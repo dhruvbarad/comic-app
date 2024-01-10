@@ -1,6 +1,4 @@
-import {scrollToNextCard, scrollToPreviousCard} from "../utils/util";
 import Character, {CharacterProps} from "./Character";
-import {RefObject, useRef} from "react";
 
 interface CharactersProps {
     header: string;
@@ -9,27 +7,15 @@ interface CharactersProps {
 }
 
 const Characters = ({array, header, characterType}: CharactersProps) => {
-    const rowRef: RefObject<HTMLDivElement> = useRef(null);
     return (array.length > 0 ? (
-        <div className={`container-fluid ${characterType} animate__animated animate__fadeIn`}>
-            <div className={`row ${header === "" ? "" : "mt-5"} mb-5`}>
+        <div className={`container ${characterType} animate__animated animate__fadeIn`}>
+            <div className={`row flex justify-content-center flex-wrap ${header === "" ? "" : "mt-5"} mb-5`}>
                 <h3 className="text-center">{header}</h3>
-                <div className="col text-center d-flex justify-content-end align-items-center">
-                    <button className="btn float-end"
-                            onClick={() => scrollToPreviousCard(rowRef, 4)}>&lt;</button>
-                </div>
-                <div className="col-10">
-                    <div className="row flex-nowrap overflow-auto" ref={rowRef}>
                         {array.map((item, index) => (
                             <Character key={index} copyRightHTML={item.copyRightHTML} id={item.id}
                                        name={item.name} description={item.description}
                                        imageSource={item.imageSource} type={item.type}/>
                         ))}
-                    </div>
-                </div>
-                <div className="col text-center d-flex justify-content-start align-items-center">
-                    <button className="btn" onClick={() => scrollToNextCard(rowRef, 4)}>&gt;</button>
-                </div>
             </div>
         </div>
     ) : (
