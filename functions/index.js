@@ -4,13 +4,13 @@ const functions = require("firebase-functions");
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
+require('dotenv').config();
 
 const rootDirectory = path.resolve(__dirname, '..');
 const app = express();
 
-const API_HASH = "636509a4b7fed1fae26f72601899f1db"
-const PRIVATE_KEY = "f9b94630aebd18a0d1016bb2aaa09767430ad5ed"
-const PUBLIC_KEY = "b0a4bb4ae817de4b460fabd5034dd73c"
+const API_HASH = process.env.API_HASH;
+const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 app.use(cors({origin: true}));
 app.use('/dist', express.static(rootDirectory + '/dist'));
@@ -159,14 +159,7 @@ async function getCharacterDetails(id, type) {
                 imageSource: comic.thumbnail.path + '.' + comic.thumbnail.extension
             }));
 
-            const movies = resultComics.data.results.map((comic) => new Object({
-                copyRightHTML: "",
-                title: "Coming soon",
-                description: "",
-                imageSource: ""
-            }));
-
-            return {comics: comics, movies: movies}
+            return {comics: comics}
         } catch (error) {
             console.error('Error: ', error);
             throw error;
