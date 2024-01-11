@@ -10,11 +10,12 @@ import CharacterDetailsWrapper from "./components/CharacterDetailsWrapper";
 function App() {
     const [marvelCharacters, setMarvelCharacters] = useState<CharacterProps[]>([]);
     const [starWarsCharacters, setStarWarsCharacters] = useState<CharacterProps[]>([]);
+    const [dcCharacters, setDcCharacters] = useState<CharacterProps[]>([]);
 
     React.useEffect(() => {
         fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/marvel_characters`)
             .then((res) => res.json())
-            .then((data) => setMarvelCharacters(data.characters))
+            .then((data: any) => setMarvelCharacters(data.characters))
             .catch((err) => console.log("Error fetching data" + err))
             .finally(() => console.log("Results received from Server"));
     }, []);
@@ -22,7 +23,15 @@ function App() {
     React.useEffect(() => {
         fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/starwars_characters`)
             .then((res) => res.json())
-            .then((data) => setStarWarsCharacters(data.characters))
+            .then((data: any) => setStarWarsCharacters(data.characters))
+            .catch((err) => console.log("Error fetching data" + err))
+            .finally(() => console.log("Results received from Server"));
+    }, []);
+
+    React.useEffect(() => {
+        fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/dc_characters`)
+            .then((res) => res.json())
+            .then((data: any) => setDcCharacters(data.characters))
             .catch((err) => console.log("Error fetching data" + err))
             .finally(() => console.log("Results received from Server"));
     }, []);
@@ -58,6 +67,13 @@ function App() {
                                <>
                                    <Characters array={starWarsCharacters} characterType="starwars_characters"
                                                header="Star Wars"/>
+                               </>
+                           }/>
+                    <Route path='/dc'
+                           element={
+                               <>
+                                   <Characters array={dcCharacters} characterType="dc_characters"
+                                               header="DC"/>
                                </>
                            }/>
                     <Route path='/marvel/:id'

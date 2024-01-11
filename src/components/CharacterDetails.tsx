@@ -1,5 +1,7 @@
 import React, {useState} from "react";
+import {useNavigate} from "react-router";
 import DetailCards from "./DetailCards.tsx";
+import 'animate.css';
 
 interface CharacterDetailsProps {
     id: number;
@@ -12,15 +14,25 @@ const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
     React.useEffect(() => {
         fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/${characterType}/${id}`)
             .then((res) => res.json())
-            .then((data) => setCharacterDetails(data))
+            .then((data: any) => setCharacterDetails(data))
             .catch((err) => console.log("Error fetching data" + err))
             .finally(() => console.log("Results received from Server"));
     }, []);
 
-    const entries = Object.entries(characterDetails)
+    const entries = Object.entries(characterDetails);
+
+    const Navigate = useNavigate();
+    const backToCharacters = () => {
+        if (characterType === 'marvel_characters') {
+            Navigate('/marvel');
+        }
+        else if (characterType === 'starwars_characters') {
+            Navigate('/star-wars');
+        }
+    }
     return (
         <div className={`container-fluid ${characterType} animate__animated animate__fadeIn`}>
-            <h5 className="p-4"><a className="link-light" onClick={() => window.history.back()}>&lt; Back to characters</a></h5>
+            <h5 className="p-4"><a className="link-light" onClick={backToCharacters}>&lt; Back to characters</a></h5>
             {entries.length > 0 ? (
                 entries.map(([key, value]) =>
                     <DetailCards array={value} header={key}/>

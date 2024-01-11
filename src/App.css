@@ -50,6 +50,19 @@ body, html {
     background-color: #e62429;
 }
 
+.dc_characters .btn, .dc_characters .btn:hover {
+    background-color: darkblue;
+}
+
+.dc_characters .card {
+    background-color: black;
+    box-shadow: 0 0 15px 1px darkblue;
+}
+
+.dc_characters .card-title {
+    background-color: darkblue;
+}
+
 .starwars_characters .btn, .starwars_characters .btn:hover {
     background-color: hsl(49, 100%, 40%);
 }

@@ -9,14 +9,15 @@ require('dotenv').config();
 const rootDirectory = path.resolve(__dirname, '..');
 const app = express();
 
-const API_HASH = process.env.API_HASH;
-const PUBLIC_KEY = process.env.PUBLIC_KEY;
+const API_HASH = process.env.MARVEL_API_HASH;
+const PUBLIC_KEY = process.env.MARVEL_PUBLIC_KEY;
+const SUPERHERO_API_TOKEN = process.env.SUPERHERO_API_TOKEN;
 
 app.use(cors({origin: true}));
 app.use('/dist', express.static(rootDirectory + '/dist'));
 app.use('/assets', express.static(rootDirectory + '/dist/assets'));
 
-const marvelItems = [
+const marvelIds = [
     {id: 1009368, name: "Iron Man"},
     {id: 1009220, name: "Captain America"},
     {id: 1009664, name: "Thor"},
@@ -31,7 +32,7 @@ const marvelItems = [
     {id: 1010801, name: "Ant-Man (Scott Lang)"}
 ]
 
-const starWarsItems = [
+const starWarsIds = [
     {id: 1, name: "Luke Skywalker"},
     {id: 2, name: "C-3PO"},
     {id: 3, name: "R2-D2"},
@@ -44,11 +45,15 @@ const starWarsItems = [
     {id: 20, name: "Yoda"},
     {id: 21, name: "Palpatine"},
     {id: 22, name: "Boba Fett"},
-
 ]
 
-const marvelCharacters = marvelItems.map(item => getCharacter(item.id, "marvel"));
-const starWarsCharacters = starWarsItems.map(item => getCharacter(item.id, "star-wars"));
+const dcIds = [
+    {id: 70, name: "Batman"},
+]
+
+const marvelCharacters = marvelIds.map(item => getCharacter(item.id, "marvel"));
+const starWarsCharacters = starWarsIds.map(item => getCharacter(item.id, "star-wars"));
+const dcCharacters = dcIds.map(item => getCharacter(item.id, "dc"));
 
 app.get("/marvel_characters", (req, res) => {
     Promise.all(marvelCharacters)
@@ -109,6 +114,26 @@ app.get("/starwars_characters/:id", (req, res) => {
         });
 });
 
+app.get("/dc_characters", (req, res) => {
+    Promise.all(dcCharacters)
+        .then(responses => {
+            res.json({"characters": responses});
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+app.get("/dc_characters/:id", (req, res) => {
+    getCharacterDetails(req.params.id, "dc")
+        .then(responses => {
+            res.json({"Latest comics": responses.comics});
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
 async function getCharacter(id, type) {
     if (type === 'marvel') {
         try {
@@ -138,6 +163,23 @@ async function getCharacter(id, type) {
                 name: result.name,
                 description: 'Coming soon',
                 imageSource: "/na.jpg",
+                type: type
+            };
+        } catch (error) {
+            console.error('Error: ', error);
+            throw error;
+        }
+    }
+    if (type === 'dc') {
+        try {
+            const response = await fetch(`https://superheroapi.com/api.php/${SUPERHERO_API_TOKEN}/${id}`);
+            const result = await response.json();
+            return {
+                copyRightHTML: "<a href=\"https://superheroapi.com\">Data provided by superheroapi.com</a>",
+                id: id,
+                name: result.name + " (" + result.biography["full-name"] + ")" ,
+                description: "",
+                imageSource: result.image.url,
                 type: type
             };
         } catch (error) {

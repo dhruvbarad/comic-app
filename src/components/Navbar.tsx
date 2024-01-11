@@ -9,6 +9,9 @@ const Navbar = () => {
                     <a href="/marvel"><img src="/marvel.png" alt="Marvel"/></a>
                 </li>
                 <li className="nav-item">
+                    <a href="/dc"><img src="/dc.jpg" alt="DC"/></a>
+                </li>
+                <li className="nav-item">
                     <a href="/star-wars"><img src="/star-wars.png" alt="Star Wars"/></a>
                 </li>
             </ul>

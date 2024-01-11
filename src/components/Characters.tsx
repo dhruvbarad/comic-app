@@ -1,4 +1,5 @@
 import Character, {CharacterProps} from "./Character";
+import 'animate.css';
 
 interface CharactersProps {
     header: string;
