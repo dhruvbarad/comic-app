@@ -13,6 +13,9 @@ const API_HASH = process.env.MARVEL_API_HASH;
 const PUBLIC_KEY = process.env.MARVEL_PUBLIC_KEY;
 const SUPERHERO_API_TOKEN = process.env.SUPERHERO_API_TOKEN;
 
+const MARVEL_API_BASE_URL = "https://gateway.marvel.com:443";
+const SUPERHERO_API_BASE_URL = `https://superheroapi.com/api.php/${SUPERHERO_API_TOKEN}`;
+
 app.use(cors({origin: true}));
 app.use('/dist', express.static(rootDirectory + '/dist'));
 app.use('/assets', express.static(rootDirectory + '/dist/assets'));
@@ -33,22 +36,20 @@ const marvelIds = [
 ]
 
 const starWarsIds = [
-    {id: 1, name: "Luke Skywalker"},
-    {id: 2, name: "C-3PO"},
-    {id: 3, name: "R2-D2"},
-    {id: 4, name: "Darth Vader"},
-    {id: 5, name: "Leia Organa"},
-    {id: 10, name: "Obi-Wan Kenobi"},
-    {id: 11, name: "Anakin Skywalker"},
-    {id: 13, name: "Chewbacca"},
-    {id: 14, name: "Han Solo"},
-    {id: 20, name: "Yoda"},
-    {id: 21, name: "Palpatine"},
-    {id: 22, name: "Boba Fett"},
+    {id: 418, name: "Luke Skywalker"},
+    {id: 208, name: "Darth Vader"},
+    {id: 729, name: "Yoda"},
+    {id: 307, name: "Han Solo"},
+    {id: 127, name: "Boba Fett"},
 ]
 
 const dcIds = [
     {id: 70, name: "Batman"},
+    {id: 644, name: "Superman"},
+    {id: 38, name: "Aquaman"},
+    {id: 720, name: "Wonder Woman"},
+    {id: 194, name: "Cyborg"},
+    {id: 263, name: "Flash"},
 ]
 
 const marvelCharacters = marvelIds.map(item => getCharacter(item.id, "marvel"));
@@ -57,6 +58,26 @@ const dcCharacters = dcIds.map(item => getCharacter(item.id, "dc"));
 
 app.get("/marvel_characters", (req, res) => {
     Promise.all(marvelCharacters)
+        .then(responses => {
+            res.json({"characters": responses});
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+app.get("/starwars_characters", (req, res) => {
+    Promise.all(starWarsCharacters)
+        .then(responses => {
+            res.json({"characters": responses});
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+});
+
+app.get("/dc_characters", (req, res) => {
+    Promise.all(dcCharacters)
         .then(responses => {
             res.json({"characters": responses});
         })
@@ -75,49 +96,10 @@ app.get("/marvel_characters/:id", (req, res) => {
         });
 });
 
-app.get("/starwars_characters", (req, res) => {
-    Promise.all(starWarsCharacters)
-        .then(responses => {
-            res.json({"characters": responses});
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
-
 app.get("/starwars_characters/:id", (req, res) => {
     getCharacterDetails(req.params.id, "star-wars")
-        .then(filmUrls => {
-            async function getMovieDetail(url) {
-                const response = await fetch(url);
-                const result = await response.json();
-                return new Object({
-                    copyRightHTML: "<a href=\"https://swapi.dev\">Data provided by swapi.dev.</a>",
-                    title: result.title,
-                    description: result.opening_crawl.replace(/\s+/g, ' ').trim(),
-                    imageSource: "/na.jpg"
-                });
-            }
-
-            const characterMovies = filmUrls.map(url => getMovieDetail(url));
-
-            Promise.all(characterMovies)
-                .then(responses => {
-                    res.json({Movies: responses});
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-});
-
-app.get("/dc_characters", (req, res) => {
-    Promise.all(dcCharacters)
-        .then(responses => {
-            res.json({"characters": responses});
+        .then(() => {
+            res.json({code: 404});
         })
         .catch(error => {
             console.error('Error:', error);
@@ -126,8 +108,8 @@ app.get("/dc_characters", (req, res) => {
 
 app.get("/dc_characters/:id", (req, res) => {
     getCharacterDetails(req.params.id, "dc")
-        .then(responses => {
-            res.json({"Latest comics": responses.comics});
+        .then(() => {
+            res.json({code: 404});
         })
         .catch(error => {
             console.error('Error:', error);
@@ -137,8 +119,11 @@ app.get("/dc_characters/:id", (req, res) => {
 async function getCharacter(id, type) {
     if (type === 'marvel') {
         try {
-            const response = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1`);
+            const response = await fetch(`${MARVEL_API_BASE_URL}/v1/public/characters/${id}?apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1`);
             const result = await response.json();
+            if (result.code === 404) {
+                return {code: 404};
+            }
             return {
                 copyRightHTML: result.attributionHTML,
                 id: id,
@@ -153,31 +138,17 @@ async function getCharacter(id, type) {
         }
     }
 
-    if (type === 'star-wars') {
+    if (type === 'dc' || type === "star-wars") {
         try {
-            const response = await fetch(`https://swapi.dev/api/people/${id}`);
+            const response = await fetch(`${SUPERHERO_API_BASE_URL}/${id}`);
             const result = await response.json();
-            return {
-                copyRightHTML: "<a href=\"https://swapi.dev\">Data provided by swapi.dev.</a>",
-                id: id,
-                name: result.name,
-                description: 'Coming soon',
-                imageSource: "/na.jpg",
-                type: type
-            };
-        } catch (error) {
-            console.error('Error: ', error);
-            throw error;
-        }
-    }
-    if (type === 'dc') {
-        try {
-            const response = await fetch(`https://superheroapi.com/api.php/${SUPERHERO_API_TOKEN}/${id}`);
-            const result = await response.json();
+            if (result.response !== "success") {
+                return {code: 404};
+            }
             return {
                 copyRightHTML: "<a href=\"https://superheroapi.com\">Data provided by superheroapi.com</a>",
                 id: id,
-                name: result.name + " (" + result.biography["full-name"] + ")" ,
+                name: result.name,
                 description: "",
                 imageSource: result.image.url,
                 type: type
@@ -192,8 +163,11 @@ async function getCharacter(id, type) {
 async function getCharacterDetails(id, type) {
     if (type === "marvel") {
         try {
-            const responseComics = await fetch(`https://gateway.marvel.com:443/v1/public/characters/${id}/comics?limit=5&apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1&orderBy=-focDate`);
+            const responseComics = await fetch(`${MARVEL_API_BASE_URL}/v1/public/characters/${id}/comics?limit=5&apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1&orderBy=-focDate`);
             const resultComics = await responseComics.json();
+            if (resultComics.data.results.length === 0) {
+                return {code: 404}
+            }
             const comics = resultComics.data.results.map((comic) => new Object({
                 copyRightHTML: resultComics.attributionHTML,
                 title: comic.title,
@@ -208,16 +182,8 @@ async function getCharacterDetails(id, type) {
         }
     }
 
-    if (type === "star-wars") {
-        try {
-            const response = await fetch(`https://swapi.dev/api/people/${id}/`);
-            const result = await response.json();
-            return result['films'];
-
-        } catch (error) {
-            console.error('Error: ', error);
-            throw error;
-        }
+    if (type === "dc" || type === "star-wars") {
+        //TODO: From superheroapi, form a components listing details
     }
 }
 
