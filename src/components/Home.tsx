@@ -1,3 +1,5 @@
+import React from "react";
+
 const Home = () => {
     return (
         <div className="container d-flex flex-column justify-content-center align-items-center vh-100">

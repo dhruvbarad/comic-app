@@ -1,3 +1,4 @@
+import React from "react";
 import Character, {CharacterProps} from "./Character";
 import 'animate.css';
 
