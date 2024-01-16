@@ -1,5 +1,6 @@
 import {useParams} from "react-router-dom";
 import CharacterDetails from "./CharacterDetails";
+import React from "react";
 
 interface ComicWrapper {
     characterType: string;

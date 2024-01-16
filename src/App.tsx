@@ -1,9 +1,9 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Home from "./components/Home.tsx";
-import Navbar from "./components/Navbar.tsx";
-import {CharacterProps} from "./components/Character.tsx";
-import Characters from "./components/Characters.tsx";
-import React, {useState} from "react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from "./components/Home";
+import Navbar from "./components/Navbar";
+import { CharacterProps } from "./components/Character";
+import Characters from "./components/Characters";
+import React, { useState } from "react";
 import "./App.css";
 import CharacterDetailsWrapper from "./components/CharacterDetailsWrapper";
 
@@ -50,36 +50,33 @@ function App() {
     return (
         <>
             <Router>
-                <Navbar/>
+                <Navbar />
                 <Routes>
-                    <Route path='/' element={<Home/>}/>
-                    <Route path='/marvel'
-                           element={
-                               <>
-                                   <Characters array={avengers} header="The Original Avengers"
-                                               characterType="marvel_characters"/>
-                                   <Characters array={otherMarvelCharacters} header="Others"
-                                               characterType="marvel_characters"/>
-                               </>
-                           }/>
-                    <Route path='/star-wars'
-                           element={
-                               <>
-                                   <Characters array={starWarsCharacters} characterType="starwars_characters"
-                                               header="Star Wars"/>
-                               </>
-                           }/>
-                    <Route path='/dc'
-                           element={
-                               <>
-                                   <Characters array={dcCharacters} characterType="dc_characters"
-                                               header="DC"/>
-                               </>
-                           }/>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/marvel' element={
+                        <>
+                            <Characters array={avengers} header="The Original Avengers"
+                                characterType="marvel_characters" />
+                            <Characters array={otherMarvelCharacters} header="Others"
+                                characterType="marvel_characters" />
+                        </>
+                    } />
+                    <Route path='/star-wars' element={
+                        <>
+                            <Characters array={starWarsCharacters} characterType="starwars_characters"
+                                header="Star Wars" />
+                        </>
+                    } />
+                    <Route path='/dc' element={
+                        <>
+                            <Characters array={dcCharacters} characterType="dc_characters"
+                                header="DC" />
+                        </>
+                    } />
                     <Route path='/marvel/:id'
-                           element={<><CharacterDetailsWrapper characterType="marvel_characters"/></>}/>
+                        element={<><CharacterDetailsWrapper characterType="marvel_characters" /></>} />
                     <Route path='/star-wars/:id'
-                           element={<><CharacterDetailsWrapper characterType="starwars_characters"/></>}/>
+                        element={<><CharacterDetailsWrapper characterType="starwars_characters" /></>} />
                 </Routes>
             </Router>
         </>

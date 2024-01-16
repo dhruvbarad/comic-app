@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router";
-import DetailCards from "./DetailCards.tsx";
+import DetailCards from "./DetailCards";
 import 'animate.css';
 
 interface CharacterDetailsProps {

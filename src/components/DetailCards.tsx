@@ -1,6 +1,7 @@
-import DetailCard, {DetailsProps} from "./DetailCard.tsx";
+import DetailCard, {DetailsProps} from "./DetailCard";
 import {RefObject, useRef} from "react";
-import {scrollToPreviousCard, scrollToNextCard} from "../utils/util.ts";
+import {scrollToPreviousCard, scrollToNextCard} from "../utils/util";
+import React from "react";
 
 
 interface DetailCardsProps {

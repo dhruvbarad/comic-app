@@ -1,7 +1,9 @@
+import React from "react";
+
 const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg">
-            <ul className="align-items-center navbar-nav mx-auto mb-2 mb-lg-0">
+            <ul className="align-items-center navbar-nav mx-auto mb-2">
                 <li className="nav-item">
                     <a className="nav-link" href="/">Home</a>
                 </li>
