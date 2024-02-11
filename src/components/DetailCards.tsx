@@ -1,7 +1,6 @@
 import DetailCard, {DetailsProps} from "./DetailCard";
 import {RefObject, useRef} from "react";
 import {scrollToPreviousCard, scrollToNextCard} from "../utils/util";
-import React from "react";
 
 
 interface DetailCardsProps {
@@ -18,13 +17,12 @@ const DetailCards = ({array, header}: DetailCardsProps) => {
                 <div className="row">
                     <div className="col text-center d-flex justify-content-end align-items-center">
                         <button className="btn float-end" onClick={() => scrollToPreviousCard(rowRef, 3)}>&lt;</button>
-
                     </div>
                     <div className="col-10">
                         <div className="row flex-nowrap overflow-auto" ref={rowRef}>
                             {array.map((item, index) => (
                                 <DetailCard key={index} copyRightHTML={item.copyRightHTML} title={item.title}
-                                            description={item.description} imageSource={item.imageSource}/>
+                                            descriptions={item.descriptions} imageSource={item.imageSource}/>
 
                             ))}
                         </div>

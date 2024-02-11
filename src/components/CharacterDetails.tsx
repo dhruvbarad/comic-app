@@ -22,7 +22,7 @@ const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
     const [characterDetails, setCharacterDetails] = useState<Object>([]);
 
     React.useEffect(() => {
-        fetch(`https://us-central1-comic-app-50173.cloudfunctions.net/app/${characterType}/${id}`)
+        fetch(`/api/${characterType}/${id}`)
             .then((res) => res.json())
             .then((data: any) => setCharacterDetails(data))
             .catch((err) => console.log("Error fetching data" + err))
