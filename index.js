@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
-const http = require('http');
 const morgan = require('morgan');
 const axios = require('axios');
 require('dotenv').config();
@@ -17,6 +16,7 @@ const SUPERHERO_API_BASE_URL = `https://superheroapi.com/api.php/${SUPERHERO_API
 
 app.use(cors({origin: true}));
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'assets')));
 app.use(morgan('combined'));
 
 const marvelIds = [
@@ -253,7 +253,4 @@ async function getCharacterDetails(id, type) {
     }
 }
 
-const port = process.env.PORT || 3000;
-http.createServer(app).listen(port, () => {
-    console.log(`Server running`);
-});
+module.exports = app;
