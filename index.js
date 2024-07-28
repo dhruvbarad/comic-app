@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-undef */
 const express = require("express");
 const path = require("path");
 const cors = require('cors');
+const http = require('http');
+const morgan = require('morgan');
+const axios = require('axios');
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +17,7 @@ const SUPERHERO_API_BASE_URL = `https://superheroapi.com/api.php/${SUPERHERO_API
 
 app.use(cors({origin: true}));
 app.use(express.static(path.join(__dirname, 'dist')));
+app.use(morgan('combined'));
 
 const marvelIds = [
     {id: 1009368, name: "Iron Man"},
@@ -145,8 +147,8 @@ app.get("/api/dc_characters/:id", (req, res) => {
 async function getCharacter(id, type) {
     if (type === 'marvel') {
         try {
-            const response = await fetch(`${MARVEL_API_BASE_URL}/v1/public/characters/${id}?apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1`);
-            const result = await response.json();
+            const response = await axios.get(`${MARVEL_API_BASE_URL}/v1/public/characters/${id}?apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1`);
+            const result = response.data;
             if (result.code === 404) {
                 return {code: 404};
             }
@@ -166,8 +168,8 @@ async function getCharacter(id, type) {
 
     if (type === 'dc' || type === "star-wars") {
         try {
-            const response = await fetch(`${SUPERHERO_API_BASE_URL}/${id}`);
-            const result = await response.json();
+            const response = await axios.get(`${SUPERHERO_API_BASE_URL}/${id}`);
+            const result = response.data;
             if (result.response !== "success") {
                 return {code: 404};
             }
@@ -197,8 +199,8 @@ async function getCharacter(id, type) {
 async function getCharacterDetails(id, type) {
     if (type === "marvel") {
         try {
-            const responseComics = await fetch(`${MARVEL_API_BASE_URL}/v1/public/characters/${id}/comics?limit=5&apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1&orderBy=-focDate`);
-            const resultComics = await responseComics.json();
+            const responseComics = await axios.get(`${MARVEL_API_BASE_URL}/v1/public/characters/${id}/comics?limit=5&apikey=${PUBLIC_KEY}&hash=${API_HASH}&ts=1&orderBy=-focDate`);
+            const resultComics = responseComics.data;
             if (resultComics.data.results.length === 0) {
                 return {code: 404}
             }
@@ -218,8 +220,8 @@ async function getCharacterDetails(id, type) {
 
     if (type === "dc" || type === "star-wars") {
         try {
-            const response = await fetch(`${SUPERHERO_API_BASE_URL}/${id}`);
-            const result = await response.json();
+            const response = await axios.get(`${SUPERHERO_API_BASE_URL}/${id}`);
+            const result = response.data;
             if (result.response !== "success") {
                 return {code: 404};
             }
@@ -251,6 +253,7 @@ async function getCharacterDetails(id, type) {
     }
 }
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Listening on: http://localhost:" + process.env.PORT);
+const port = process.env.PORT || 3000;
+http.createServer(app).listen(port, () => {
+    console.log(`Server running`);
 });
