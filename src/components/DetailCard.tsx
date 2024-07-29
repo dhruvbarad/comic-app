@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface DetailsProps {
     copyRightHTML: string;
     title: string;

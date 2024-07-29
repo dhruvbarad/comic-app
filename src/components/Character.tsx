@@ -1,5 +1,3 @@
-import React from "react";
-
 export interface CharacterProps {
     copyRightHTML: string;
     id: number;
