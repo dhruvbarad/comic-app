@@ -1,7 +1,5 @@
-import React, {useState} from "react";
-import {useNavigate} from "react-router";
-import DetailCards from "./DetailCards";
-import 'animate.css';
+import React, {RefObject, useRef, useState} from "react";
+import {scrollToNextCard, scrollToPreviousCard} from "@/utils/scroll";
 
 interface CharacterDetailsProps {
     id: number;
@@ -9,17 +7,8 @@ interface CharacterDetailsProps {
 }
 
 const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
-    const Navigate = useNavigate();
-    const backToCharacters = () => {
-        if (characterType === 'marvel_characters') {
-            Navigate('/marvel');
-        } else if (characterType === 'starwars_characters') {
-            Navigate('/star-wars');
-        } else if (characterType === 'dc_characters') {
-            Navigate('/dc');
-        }
-    }
-    const [characterDetails, setCharacterDetails] = useState<Object>([]);
+    const [characterDetails, setCharacterDetails] = useState<object>([]);
+    const rowRef: RefObject<HTMLDivElement> = useRef(null);
 
     React.useEffect(() => {
         fetch(`/api/${characterType}/${id}`)
@@ -27,21 +16,35 @@ const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
             .then((data: any) => setCharacterDetails(data))
             .catch((err) => console.log("Error fetching data" + err))
             .finally(() => console.log("Results received from Server"));
-    }, []);
+    }, [characterType, id]);
 
-    const entries = Object.entries(characterDetails);
+    if (!characterDetails || isNaN(id)) {
+        return <p className="text-center">Loading data...</p>
+    }
 
     return (
-        <div className={`m-5 ${characterType} animate__animated animate__fadeIn`}>
-            <h5><a className="link-light" onClick={backToCharacters}>&lt; Back to characters</a></h5>
-            {entries.length > 0 ? (
-                entries.map(([key, value]) =>
-                    <DetailCards array={value} header={key}/>
-                )
-            ) : (
-                <p className="text-center">Loading data...</p>
+        <>
+            {Object.entries(characterDetails).map(([key, value]) =>
+                <div key={key}>
+                    <div className="row justify-content-center">
+                        <h3 className="text-center">{key}</h3>
+                        <div className="row">
+                            <div className="col text-center d-flex justify-content-end align-items-center">
+                                <button className="btn float-end"
+                                        onClick={() => scrollToPreviousCard(rowRef, 3)}>&lt;</button>
+                            </div>
+                            <div className="col-10">
+                                <div className="row flex-nowrap overflow-auto" ref={rowRef}>
+                                </div>
+                            </div>
+                            <div className="col text-center d-flex justify-content-start align-items-center">
+                                <button className="btn" onClick={() => scrollToNextCard(rowRef, 3)}>&gt;</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )}
-        </div>
+        </>
     );
 }
 
