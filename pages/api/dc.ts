@@ -1,4 +1,4 @@
-import {getCharacter} from '@/utils/getCharacter';
+import {getCharacter} from '../../utils/getCharacter';
 import type {NextApiRequest, NextApiResponse} from "next"; // assuming the function is placed in utils
 
 const dcIds = [

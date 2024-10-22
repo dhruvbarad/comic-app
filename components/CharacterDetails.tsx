@@ -1,5 +1,5 @@
 import React, {RefObject, useRef, useState} from "react";
-import {scrollToNextCard, scrollToPreviousCard} from "@/utils/scroll";
+import {scrollToNextCard, scrollToPreviousCard} from "../utils/scroll";
 
 interface CharacterDetailsProps {
     id: number;

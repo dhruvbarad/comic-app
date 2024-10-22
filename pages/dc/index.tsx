@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {CharacterProps} from "@/components/Characters";
-import Characters from "@/components/Characters";
+import Characters, {CharacterProps} from "../../components/Characters";
 
 export default function Dc() {
     const [dcCharacters, setDcCharacters] = useState<CharacterProps[]>([]);
@@ -10,7 +9,6 @@ export default function Dc() {
             .then((res) => res.json())
             .then((data: any) => setDcCharacters(data.characters))
             .catch((err) => console.log("Error fetching data" + err))
-            .finally(() => console.log("Results received from Server"));
     }, []);
     return (
         <Characters header='DC' array={dcCharacters}/>

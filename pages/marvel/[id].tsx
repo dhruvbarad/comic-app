@@ -1,6 +1,6 @@
 import React from "react";
 import {useRouter} from 'next/router';
-import CharacterDetails from "@/components/CharacterDetails";
+import CharacterDetails from "../../components/CharacterDetails";
 
 export default function MarvelCharacter() {
     const router = useRouter();
