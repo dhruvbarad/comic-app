@@ -18,14 +18,10 @@ const CharacterDetails = ({details, type}: CharacterDetailsProps) => {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
                             {Object.values(details[category]).map((item, itemIndex) => (
                                 <div key={itemIndex}
-                                     className={`${type}-box-shadow flex flex-col h-full overflow-hidden mb-12`}>
-                                    <img
-                                        className="w-full"
-                                        src={item.imageSource}
-                                        alt={item.title}
-                                    />
-                                    <p className={`text-center text-lg m-2 card-title`}>{item.title}</p>
-                                    <div className="px-2 flex flex-col flex-grow">
+                                     className={`${type}-box-shadow flex flex-col h-full overflow-hidden mb-12 p-3`}>
+                                    <img className="w-full" src={item.imageSource} alt={item.title}/>
+                                    <p className={`text-center text-lg card-title`}>{item.title}</p>
+                                    <div className="flex flex-col flex-grow">
                                         {item.descriptions?.map((description, index) => (
                                             <p key={index} className="text-base flex-grow">
                                                 {description}
@@ -33,7 +29,7 @@ const CharacterDetails = ({details, type}: CharacterDetailsProps) => {
                                         ))}
                                     </div>
                                     <small
-                                        className="px-2 mt-2 mb-2 text-gray-500"
+                                        className="text-gray-500"
                                         dangerouslySetInnerHTML={{__html: item.copyRightHTML}}
                                     />
                                 </div>
