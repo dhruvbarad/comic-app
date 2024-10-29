@@ -1,51 +1,49 @@
-import React, {RefObject, useRef, useState} from "react";
-import {scrollToNextCard, scrollToPreviousCard} from "../utils/scroll";
+import React from "react";
 
 interface CharacterDetailsProps {
-    id: number;
-    characterType: string;
+    details: { [key: string]: any[] };
+    type: string;
 }
 
-const CharacterDetails = ({characterType, id}: CharacterDetailsProps) => {
-    const [characterDetails, setCharacterDetails] = useState<object>([]);
-    const rowRef: RefObject<HTMLDivElement> = useRef(null);
-
-    React.useEffect(() => {
-        fetch(`/api/${characterType}/${id}`)
-            .then((res) => res.json())
-            .then((data: any) => setCharacterDetails(data))
-            .catch((err) => console.log("Error fetching data" + err))
-            .finally(() => console.log("Results received from Server"));
-    }, [characterType, id]);
-
-    if (!characterDetails || isNaN(id)) {
-        return <p className="text-center">Loading data...</p>
+const CharacterDetails = ({details, type}: CharacterDetailsProps) => {
+    if (!details) {
+        return <p>Loading...</p>; // Or null
     }
-
     return (
-        <>
-            {Object.entries(characterDetails).map(([key, value]) =>
-                <div key={key}>
-                    <div className="row justify-content-center">
-                        <h3 className="text-center">{key}</h3>
-                        <div className="row">
-                            <div className="col text-center d-flex justify-content-end align-items-center">
-                                <button className="btn float-end"
-                                        onClick={() => scrollToPreviousCard(rowRef, 3)}>&lt;</button>
-                            </div>
-                            <div className="col-10">
-                                <div className="row flex-nowrap overflow-auto" ref={rowRef}>
+        <div className={`${type} m-6`}>
+            {Object.keys(details).map((category) => (
+                <div key={category}>
+                    <p className="text-xl text-center">{category}</p>
+                    <div className="flex items-center">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
+                            {Object.values(details[category]).map((item, itemIndex) => (
+                                <div key={itemIndex}
+                                     className={`${type}-box-shadow flex flex-col h-full overflow-hidden mb-12`}>
+                                    <img
+                                        className="w-full"
+                                        src={item.imageSource}
+                                        alt={item.title}
+                                    />
+                                    <p className={`text-center text-lg m-2 card-title`}>{item.title}</p>
+                                    <div className="px-2 flex flex-col flex-grow">
+                                        {item.descriptions?.map((description, index) => (
+                                            <p key={index} className="text-base flex-grow">
+                                                {description}
+                                            </p>
+                                        ))}
+                                    </div>
+                                    <small
+                                        className="px-2 mt-2 mb-2 text-gray-500"
+                                        dangerouslySetInnerHTML={{__html: item.copyRightHTML}}
+                                    />
                                 </div>
-                            </div>
-                            <div className="col text-center d-flex justify-content-start align-items-center">
-                                <button className="btn" onClick={() => scrollToNextCard(rowRef, 3)}>&gt;</button>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
-            )}
-        </>
+            ))}
+        </div>
     );
-}
+};
 
 export default CharacterDetails;

@@ -22,7 +22,6 @@ export default async function getCharacterDetails(id: number, type: string) {
             }))
             return {"Latest Comics": comics}
         } catch (error) {
-            console.error('Error: ', error);
             throw error;
         }
     }
@@ -53,12 +52,13 @@ export default async function getCharacterDetails(id: number, type: string) {
                 imageSource: ""
             })
             return {
-                "Intelligence": intelligence,
-                "Strength": strength,
-                "Speed": speed
+                "Stats": [
+                    intelligence,
+                    strength,
+                    speed
+                ]
             }
         } catch (error) {
-            console.error('Error: ', error);
             throw error;
         }
     }

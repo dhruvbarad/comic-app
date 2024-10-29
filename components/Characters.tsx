@@ -1,4 +1,4 @@
-import {it} from "node:test";
+import {useRouter} from "next/router";
 
 export interface CharacterProps {
     copyRightHTML: string;
@@ -18,8 +18,9 @@ const Characters = ({array, header}: CharactersProps) => {
     if (!array) {
         return <p>Loading...</p>; // Or null
     }
+    const navigate = useRouter();
     return (
-        <div className="mx-6">
+        <div className="m-6">
             <h3 className="text-center">{header}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
                 {array.map((item) => (
@@ -27,17 +28,19 @@ const Characters = ({array, header}: CharactersProps) => {
                         <img
                             className="w-full p-2"
                             src={item.imageSource}
-                            alt="Placeholder Image"
+                            alt={item.name}
                         />
                         <div className="px-2 flex flex-col flex-grow">
-                            <div className="card-title font-bold text-xl mb-2 text-center bg-blue-600">{item.name}</div>
+                            <div className="card-title font-bold text-xl mb-2 text-center">{item.name}</div>
                             {item.descriptions.map((description, index) => (
                                 <p key={index} className="text-base flex-grow">{description}</p>
                             ))}
                         </div>
-                        <small className="px-2 mt-2 mb-2 text-gray-500" dangerouslySetInnerHTML={{__html: item.copyRightHTML}}/>
-                        <button className="font-bold rounded bg-white text-black">
-                            Button
+                        <small className="px-2 mt-2 mb-2 text-gray-500"
+                               dangerouslySetInnerHTML={{__html: item.copyRightHTML}}/>
+                        <button onClick={() => navigate.push(`/${item.type}/${item.id}`)}
+                                className="font-bold rounded bg-white text-black">
+                            Click for character's details
                         </button>
                     </div>
                 ))}
