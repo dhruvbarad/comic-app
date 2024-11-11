@@ -14,12 +14,15 @@ const CharacterDetails = ({details, type}: CharacterDetailsProps) => {
             {Object.keys(details).map((category) => (
                 <div key={category}>
                     <p className="text-xl text-center">{category}</p>
-                    <div className="flex items-center">
+                    <div className="flex justify-center items-center">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
                             {Object.values(details[category]).map((item, itemIndex) => (
                                 <div key={itemIndex}
                                      className={`${type}-box-shadow flex flex-col h-full overflow-hidden mb-12 p-3`}>
-                                    <img className="w-full" src={item.imageSource} alt={item.title}/>
+                                    {item.imageSource ?
+                                        <img className="w-full" src={item.imageSource} alt={item.title}/>
+                                        : ""
+                                    }
                                     <p className={`text-center text-lg card-title`}>{item.title}</p>
                                     <div className="flex flex-col flex-grow">
                                         {item.descriptions?.map((description, index) => (
