@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Character, {CharacterProps} from "@/components/Character";
 
 export default function Marvel() {
-  const [marvelCharacters, setMarvelCharacters] = useState<CharacterProps[]>([]);
+  const [marvelCharacters, setMarvelCharacters] = useState<CharacterProps[]>();
 
   React.useEffect(() => {
     fetch(`/api/marvel`)
@@ -16,16 +16,16 @@ export default function Marvel() {
     <div className="m-6">
       <p className="text-xl text-center">Marvel</p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        {marvelCharacters.map((item) => (
-          <Character
-            id={item.id}
-            name={item.name}
-            descriptions={item.descriptions}
-            imageSource={item.imageSource}
-            type='marvel'
-            copyRightHTML={item.copyRightHTML}
-          />
-        ))}
+        {/*{marvelCharacters.map((item) => (*/}
+        {/*  <Character*/}
+        {/*    id={item.id}*/}
+        {/*    name={item.name}*/}
+        {/*    descriptions={item.descriptions}*/}
+        {/*    imageSource={item.imageSource}*/}
+        {/*    type='marvel'*/}
+        {/*    copyRightHTML={item.copyRightHTML}*/}
+        {/*  />*/}
+        {/*))}*/}
       </div>
     </div>
   );
