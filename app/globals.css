@@ -1,48 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  background: #000;
-  color: #fff;
+    background: #000;
+    color: #fff;
 }
 
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-corner {
-  background: black;
+    background: black;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2c3034;
+    background: #2c3034;
 }
 
 .marvel button,
 .marvel button:hover,
 .marvel .card-title {
-  background-color: #e62429;
-  color: white;
+    background-color: #e62429;
+    color: white;
 }
 
 .dc button,
-.dc_characters button:hover,
+.dc button:hover,
 .dc .card-title {
-  background-color: darkblue;
-  color: white;
+    background-color: darkblue;
+    color: white;
 }
 
 .star-wars button,
 .star-wars button:hover,
 .star-wars .card-title {
-  background-color: hsl(49, 100%, 40%);
-  color: white;
+    background-color: hsl(49, 100%, 40%);
+    color: white;
 }
 
 .marvel-box-shadow {
-  box-shadow: 0 0 15px 1px #e62429;
+    box-shadow: 0 0 15px 1px #e62429;
 }
 
 .dc-box-shadow {
-  box-shadow: 0 0 15px 1px darkblue;
+    box-shadow: 0 0 15px 1px darkblue;
 }
 
 .star-wars-box-shadow {
-  box-shadow: 0 0 15px 1px hsl(49, 100%, 40%);
+    box-shadow: 0 0 15px 1px hsl(49, 100%, 40%);
 }
